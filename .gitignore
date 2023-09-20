@@ -1,0 +1,6 @@
+*.xsd
+*.exe
+*.dll
+
+bin
+obj

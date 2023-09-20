@@ -1,0 +1,20 @@
+name: Build
+
+on: [push, repository_dispatch, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Visual Studio
+        uses: ilammy/msvc-dev-cmd@v1
+      - name: Build executable
+        shell: powershell
+        run: >
+          dotnet build --configuration=Release --output=bin
+      - uses: actions/upload-artifact@v3
+        with:
+          name: MDPatcher
+          path: bin/MDPatcher.exe
