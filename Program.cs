@@ -205,11 +205,15 @@ class Program {
         }
 
         // Patch MAC service
-        TypeDefinition macService = duckCore.TopLevelTypes.Single(m => m.FullName == "ch.iterate.mountainduck.registration.MacUniqueIdService");
-        MethodDefinition enumerateMethod = macService.Methods.Single(m => m.Name == "enumerate");
-        MethodDefinition uuidMethod = macService.Methods.Single(m => m.Name == "getUUID");
-        EmptyBodyFor(enumerateMethod);
-        EmptyBodyFor(uuidMethod);
+        try {
+            TypeDefinition macService = duckCore.TopLevelTypes.Single(m => m.FullName == "ch.iterate.mountainduck.registration.MacUniqueIdService");
+            MethodDefinition enumerateMethod = macService.Methods.Single(m => m.Name == "enumerate");
+            MethodDefinition uuidMethod = macService.Methods.Single(m => m.Name == "getUUID");
+            EmptyBodyFor(enumerateMethod);
+            EmptyBodyFor(uuidMethod);
+        } catch {
+            Console.WriteLine("Unique ID service is not part of this version.");
+        }
 
         // Remove trial service key download
         TypeDefinition trialService = duckCore.TopLevelTypes.Single(m => m.FullName == "ch.iterate.mountainduck.registration.TrialKeyLicenseService");
